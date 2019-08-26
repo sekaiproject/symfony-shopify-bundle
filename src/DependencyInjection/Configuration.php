@@ -1,4 +1,5 @@
 <?php
+
 namespace CodeCloud\Bundle\ShopifyBundle\DependencyInjection;
 
 use Symfony\Component\Config\Definition\Builder\TreeBuilder;
@@ -7,7 +8,7 @@ use Symfony\Component\Config\Definition\ConfigurationInterface;
 class Configuration implements ConfigurationInterface
 {
     /**
-     * Generates the configuration tree builder for the shopify configuration entries
+     * Generates the configuration tree builder for the shopify configuration entries.
      *
      * @return \Symfony\Component\Config\Definition\Builder\TreeBuilder The tree builder
      */

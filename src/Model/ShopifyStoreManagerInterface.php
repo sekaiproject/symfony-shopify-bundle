@@ -9,6 +9,7 @@ interface ShopifyStoreManagerInterface
 {
     /**
      * @param string $storeName
+     *
      * @return string
      */
     public function getAccessToken($storeName): string;
@@ -17,6 +18,7 @@ interface ShopifyStoreManagerInterface
      * Return whether the specified store exists.
      *
      * @param string $storeName
+     *
      * @return bool
      */
     public function storeExists($storeName): bool;

@@ -1,4 +1,5 @@
 <?php
+
 namespace CodeCloud\Bundle\ShopifyBundle\Api\Request;
 
 use GuzzleHttp\Psr7\Request;
@@ -6,13 +7,13 @@ use GuzzleHttp\Psr7\Request;
 class PutJson extends Request
 {
     /**
-     * @param string $url
+     * @param string       $url
      * @param array|string $postData
-     * @param array $headers
+     * @param array        $headers
      */
-    public function __construct($url, $postData = null, array $headers = array())
+    public function __construct($url, $postData = null, array $headers = [])
     {
-        if ($postData !== null) {
+        if (null !== $postData) {
             $postData = json_encode($postData, JSON_PRETTY_PRINT);
         }
 

@@ -24,7 +24,7 @@ class WebhookController
 
     /**
      * @param ShopifyStoreManagerInterface $storeManager
-     * @param EventDispatcherInterface $eventDispatcher
+     * @param EventDispatcherInterface     $eventDispatcher
      */
     public function __construct(ShopifyStoreManagerInterface $storeManager, EventDispatcherInterface $eventDispatcher)
     {
@@ -34,11 +34,12 @@ class WebhookController
 
     /**
      * @param Request $request
+     *
      * @return Response
      */
     public function handleWebhook(Request $request)
     {
-        $topic     = $request->query->get('topic');
+        $topic = $request->query->get('topic');
         $storeName = $request->query->get('store');
 
         if (!$topic || !$storeName) {
@@ -54,7 +55,7 @@ class WebhookController
             throw new BadRequestHttpException('Webhook must have body content');
         }
 
-        $payload = \GuzzleHttp\json_decode($request->getContent(), true);
+        $payload = $request->getContent();
 
         $this->eventDispatcher->dispatch(WebhookEvent::NAME, new WebhookEvent(
             $topic,

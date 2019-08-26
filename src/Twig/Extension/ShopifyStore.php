@@ -1,4 +1,5 @@
 <?php
+
 namespace CodeCloud\Bundle\ShopifyBundle\Twig\Extension;
 
 use CodeCloud\Bundle\ShopifyBundle\Security\HmacSignature;
@@ -32,7 +33,7 @@ class ShopifyStore extends \Twig_Extension
     {
         $authParams = $this->hmac->generateParams($storeName);
 
-        return '/embedded/' . $uri . '?' . http_build_query(
+        return '/embedded/'.$uri.'?'.http_build_query(
             array_merge($authParams, $uriParams)
         );
     }

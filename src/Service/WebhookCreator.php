@@ -23,7 +23,7 @@ class WebhookCreator implements WebhookCreatorInterface
     private $router;
 
     /**
-     * @param ShopifyApiFactory $apis
+     * @param ShopifyApiFactory     $apis
      * @param UrlGeneratorInterface $router
      */
     public function __construct(ShopifyApiFactory $apis, UrlGeneratorInterface $router)
@@ -46,7 +46,7 @@ class WebhookCreator implements WebhookCreatorInterface
             ], UrlGeneratorInterface::ABSOLUTE_URL);
 
             // endpoint HAS to be https
-            $endpoint = str_replace("http://", "https://", $endpoint);
+            $endpoint = str_replace('http://', 'https://', $endpoint);
 
             $webhook = GenericResource::create([
                 'topic' => $topic,
@@ -57,7 +57,7 @@ class WebhookCreator implements WebhookCreatorInterface
             try {
                 $api->Webhook->create($webhook);
             } catch (ClientException $e) {
-                if ($e->getResponse()->getStatusCode() == 422) {
+                if (422 == $e->getResponse()->getStatusCode()) {
                     continue;
                 }
 

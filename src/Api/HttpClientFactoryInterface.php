@@ -11,8 +11,9 @@ use GuzzleHttp\ClientInterface;
 interface HttpClientFactoryInterface
 {
     /**
-     * @param string $storeName
+     * @param string                                     $storeName
      * @param PrivateAppCredentials|PublicAppCredentials $credentials
+     *
      * @return ClientInterface
      */
     public function createHttpClient($storeName, $credentials);

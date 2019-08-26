@@ -21,7 +21,7 @@ class ShopifyApiFactory
 
     /**
      * @param ShopifyStoreManagerInterface $storeManager
-     * @param HttpClientFactoryInterface $httpClientFactory
+     * @param HttpClientFactoryInterface   $httpClientFactory
      */
     public function __construct(
         ShopifyStoreManagerInterface $storeManager,
@@ -33,6 +33,7 @@ class ShopifyApiFactory
 
     /**
      * @param string $storeName
+     *
      * @return ShopifyApi
      */
     public function getForStore($storeName)

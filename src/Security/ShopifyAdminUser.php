@@ -22,8 +22,8 @@ class ShopifyAdminUser implements UserInterface
     private $authToken;
 
     /**
-     * @param string $username
-     * @param string[] $roles
+     * @param string      $username
+     * @param string[]    $roles
      * @param string|null $authToken
      */
     public function __construct($username, array $roles, $authToken = null)

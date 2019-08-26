@@ -1,4 +1,5 @@
 <?php
+
 namespace CodeCloud\Bundle\ShopifyBundle\Api\Endpoint;
 
 use CodeCloud\Bundle\ShopifyBundle\Api\Request\DeleteParams;
@@ -10,45 +11,53 @@ class CollectEndpoint extends AbstractEndpoint
 {
     /**
      * @param array $query
+     *
      * @return array|GenericResource[]
      */
-    public function findAll(array $query = array())
+    public function findAll(array $query = [])
     {
         $request = new GetJson('/admin/collects.json', $query);
         $response = $this->sendPaged($request, 'collects');
+
         return $this->createCollection($response);
     }
 
     /**
      * @param array $query
+     *
      * @return int
      */
-    public function countAll(array $query = array())
+    public function countAll(array $query = [])
     {
         $request = new GetJson('/admin/collects/count.json', $query);
         $response = $this->send($request);
+
         return $response->get('count');
     }
 
     /**
      * @param int $collectId
+     *
      * @return GenericResource
      */
     public function findOne($collectId)
     {
-        $request = new GetJson('/admin/collects/' . $collectId . '.json');
+        $request = new GetJson('/admin/collects/'.$collectId.'.json');
         $response = $this->send($request);
+
         return $this->createEntity($response->get('collect'));
     }
 
     /**
      * @param GenericResource $collect
+     *
      * @return GenericResource
      */
     public function create(GenericResource $collect)
     {
-        $request = new PostJson('/admin/collects.json', array('collect' => $collect->toArray()));
+        $request = new PostJson('/admin/collects.json', ['collect' => $collect->toArray()]);
         $response = $this->send($request);
+
         return $this->createEntity($response->get('collect'));
     }
 
@@ -57,7 +66,7 @@ class CollectEndpoint extends AbstractEndpoint
      */
     public function delete($collectId)
     {
-        $request = new DeleteParams('/admin/collects/' . $collectId . '.json');
+        $request = new DeleteParams('/admin/collects/'.$collectId.'.json');
         $this->send($request);
     }
 }

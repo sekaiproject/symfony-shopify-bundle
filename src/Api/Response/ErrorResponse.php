@@ -1,4 +1,5 @@
 <?php
+
 namespace CodeCloud\Bundle\ShopifyBundle\Api\Response;
 
 use GuzzleHttp\Exception\ClientException;
@@ -22,13 +23,14 @@ class ErrorResponse implements ResponseInterface
      */
     public function __construct(PsrResponse $response, ClientException $exception)
     {
-        $this->response  = $response;
+        $this->response = $response;
         $this->exception = $exception;
     }
 
     /**
      * @param null $item
      * @param null $default
+     *
      * @return mixed
      */
     public function get($item = null, $default = null)

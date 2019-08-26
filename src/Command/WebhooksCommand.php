@@ -29,9 +29,9 @@ class WebhooksCommand extends Command
     private $topics = [];
 
     /**
-     * @param WebhookCreatorInterface $webhookCreator
+     * @param WebhookCreatorInterface      $webhookCreator
      * @param ShopifyStoreManagerInterface $storeManager
-     * @param array $topics
+     * @param array                        $topics
      */
     public function __construct(WebhookCreatorInterface $webhookCreator, ShopifyStoreManagerInterface $storeManager, array $topics)
     {

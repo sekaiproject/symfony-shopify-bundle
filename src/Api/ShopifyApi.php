@@ -1,4 +1,5 @@
 <?php
+
 namespace CodeCloud\Bundle\ShopifyBundle\Api;
 
 use CodeCloud\Bundle\ShopifyBundle\Api\Endpoint\AbstractEndpoint;
@@ -146,6 +147,7 @@ class ShopifyApi
 
     /**
      * @param string $endpoint
+     *
      * @return AbstractEndpoint
      */
     public function getEndpoint($endpoint)

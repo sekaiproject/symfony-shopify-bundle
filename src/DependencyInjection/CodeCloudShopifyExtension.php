@@ -1,4 +1,5 @@
 <?php
+
 namespace CodeCloud\Bundle\ShopifyBundle\DependencyInjection;
 
 use CodeCloud\Bundle\ShopifyBundle\Security\DevAuthenticator;
@@ -26,7 +27,7 @@ class CodeCloudShopifyExtension extends Extension
             $container->setParameter('codecloud_shopify.oauth.'.$key, $value);
         }
 
-        $loader = new YamlFileLoader($container, new FileLocator(__DIR__ . '/../Resources/config'));
+        $loader = new YamlFileLoader($container, new FileLocator(__DIR__.'/../Resources/config'));
         $loader->load('services.yml');
 
         $container->setAlias('codecloud_shopify.store_manager', $config['store_manager_id']);

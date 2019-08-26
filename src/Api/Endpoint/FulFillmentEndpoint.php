@@ -1,4 +1,5 @@
 <?php
+
 namespace CodeCloud\Bundle\ShopifyBundle\Api\Endpoint;
 
 use CodeCloud\Bundle\ShopifyBundle\Api\Request\GetJson;
@@ -9,65 +10,75 @@ use CodeCloud\Bundle\ShopifyBundle\Api\GenericResource;
 class FulFillmentEndpoint extends AbstractEndpoint
 {
     /**
-     * @param int $orderId
+     * @param int   $orderId
      * @param array $query
+     *
      * @return array|\CodeCloud\Bundle\ShopifyBundle\Api\GenericResource[]
      */
-    public function findByOrder($orderId, array $query = array())
+    public function findByOrder($orderId, array $query = [])
     {
-        $request = new GetJson('/admin/orders/' . $orderId . '/fulfillments.json', $query);
+        $request = new GetJson('/admin/orders/'.$orderId.'/fulfillments.json', $query);
         $response = $this->sendPaged($request, 'fulfillments');
+
         return $this->createCollection($response);
     }
 
     /**
-     * @param int $orderId
+     * @param int   $orderId
      * @param array $query
+     *
      * @return int
      */
-    public function countByOrder($orderId, array $query = array())
+    public function countByOrder($orderId, array $query = [])
     {
-        $request = new GetJson('/admin/orders/' . $orderId . '/fulfillments/count.json', $query);
+        $request = new GetJson('/admin/orders/'.$orderId.'/fulfillments/count.json', $query);
         $response = $this->send($request);
+
         return $response->get('count');
     }
 
     /**
-     * @param int $orderId
-     * @param int $fulfillmentId
+     * @param int   $orderId
+     * @param int   $fulfillmentId
      * @param array $fields
+     *
      * @return GenericResource
      */
-    public function findOne($orderId, $fulfillmentId, array $fields = array())
+    public function findOne($orderId, $fulfillmentId, array $fields = [])
     {
-        $params = $fields ? array('fields' => $fields) : array();
-        $request = new GetJson('/admin/orders/' . $orderId . '/fulfillments/' . $fulfillmentId . '.json', $params);
+        $params = $fields ? ['fields' => $fields] : [];
+        $request = new GetJson('/admin/orders/'.$orderId.'/fulfillments/'.$fulfillmentId.'.json', $params);
         $response = $this->send($request);
+
         return $this->createEntity($response->get('fulfillment'));
     }
 
     /**
-     * @param int $orderId
+     * @param int                                                 $orderId
      * @param \CodeCloud\Bundle\ShopifyBundle\Api\GenericResource $fulfillment
+     *
      * @return GenericResource
      */
     public function create($orderId, GenericResource $fulfillment)
     {
-        $request = new PostJson('/admin/orders/' . $orderId . '/fulfillments.json', array('fulfillment' => $fulfillment->toArray()));
+        $request = new PostJson('/admin/orders/'.$orderId.'/fulfillments.json', ['fulfillment' => $fulfillment->toArray()]);
         $response = $this->send($request);
+
         return $this->createEntity($response->get('fulfillment'));
     }
 
     /**
-     * @param int $orderId
-     * @param int $fulfillmentId
+     * @param int             $orderId
+     * @param int             $fulfillmentId
      * @param GenericResource $fulfillment
+     *
      * @return GenericResource
      */
     public function update($orderId, $fulfillmentId, GenericResource $fulfillment)
     {
-        $request = new PutJson('/admin/orders/' . $orderId . '/fulfillments/' . $fulfillmentId . '.json', array('fulfillment' => $fulfillment->toArray()));
+        $request = new PutJson('/admin/orders/'.$orderId.'/fulfillments/'.$fulfillmentId.'.json', ['fulfillment' => $fulfillment->toArray()]);
         $response = $this->send($request);
+
         return $this->createEntity($response->get('fulfillment'));
     }
 
@@ -77,7 +88,7 @@ class FulFillmentEndpoint extends AbstractEndpoint
      */
     public function complete($orderId, $fulfillmentId)
     {
-        $request = new PostJson('/admin/orders/' . $orderId . '/fulfillments/' . $fulfillmentId . '/complete.json');
+        $request = new PostJson('/admin/orders/'.$orderId.'/fulfillments/'.$fulfillmentId.'/complete.json');
         $this->send($request);
     }
 
@@ -87,7 +98,7 @@ class FulFillmentEndpoint extends AbstractEndpoint
      */
     public function cancel($orderId, $fulfillmentId)
     {
-        $request = new PostJson('/admin/orders/' . $orderId . '/fulfillments/' . $fulfillmentId . '/cancel.json');
+        $request = new PostJson('/admin/orders/'.$orderId.'/fulfillments/'.$fulfillmentId.'/cancel.json');
         $this->send($request);
     }
 }

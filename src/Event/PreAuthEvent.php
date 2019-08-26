@@ -51,6 +51,7 @@ class PreAuthEvent extends Event
 
     /**
      * @param Response $response
+     *
      * @return $this
      */
     public function setResponse(Response $response)
