@@ -1,4 +1,5 @@
 <?php
+
 namespace CodeCloud\Bundle\ShopifyBundle\Api\Response;
 
 use Psr\Http\Message\ResponseInterface as PsrResponse;
@@ -29,6 +30,7 @@ class HtmlResponse implements ResponseInterface
     /**
      * @param null $item
      * @param null $default
+     *
      * @return mixed
      */
     public function get($item = null, $default = null)

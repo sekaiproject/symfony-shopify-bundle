@@ -1,4 +1,5 @@
 <?php
+
 namespace CodeCloud\Bundle\ShopifyBundle\Api\Endpoint;
 
 use CodeCloud\Bundle\ShopifyBundle\Api\Request\Exception\FailedRequestException;
@@ -28,15 +29,17 @@ abstract class AbstractEndpoint
 
     /**
      * @param RequestInterface $request
+     *
      * @return \CodeCloud\Bundle\ShopifyBundle\Api\Response\ResponseInterface
+     *
      * @throws FailedRequestException
      */
     protected function send(RequestInterface $request)
     {
         $response = $this->process($request);
 
-        if (! $response->successful()) {
-            throw new FailedRequestException('Failed request. ' . $response->getHttpResponse()->getReasonPhrase());
+        if (!$response->successful()) {
+            throw new FailedRequestException('Failed request. '.$response->getHttpResponse()->getReasonPhrase());
         }
 
         return $response;
@@ -44,8 +47,10 @@ abstract class AbstractEndpoint
 
     /**
      * @param RequestInterface $request
-     * @param string $rootElement
+     * @param string           $rootElement
+     *
      * @return array
+     *
      * @throws FailedRequestException
      */
     protected function sendPaged(RequestInterface $request, $rootElement)
@@ -54,19 +59,20 @@ abstract class AbstractEndpoint
     }
 
     /**
-     * @param array $items
+     * @param array                $items
      * @param GenericResource|null $prototype
+     *
      * @return array
      */
     protected function createCollection($items, GenericResource $prototype = null)
     {
-        if (! $prototype) {
+        if (!$prototype) {
             $prototype = new GenericResource();
         }
 
-        $collection = array();
+        $collection = [];
 
-        foreach ((array)$items as $item) {
+        foreach ((array) $items as $item) {
             $newItem = clone $prototype;
             $newItem->hydrate($item);
             $collection[] = $newItem;
@@ -77,14 +83,18 @@ abstract class AbstractEndpoint
 
     /**
      * @param array $data
+     *
      * @return GenericResource
      */
     protected function createEntity($data)
     {
         if (!is_array($data)) {
             throw new \InvalidArgumentException(
-                sprintf('Expected array, got "%s"', var_export($data, true)
-            ));
+                sprintf(
+                    'Expected array, got "%s"',
+                    var_export($data, true)
+            )
+            );
         }
 
         $entity = new GenericResource();
@@ -95,6 +105,7 @@ abstract class AbstractEndpoint
 
     /**
      * @param RequestInterface $request
+     *
      * @return \CodeCloud\Bundle\ShopifyBundle\Api\Response\ResponseInterface
      */
     protected function process(RequestInterface $request)
@@ -117,13 +128,15 @@ abstract class AbstractEndpoint
     }
 
     /**
-     * Loop through a set of API results that are available in pages, returning the full resultset as one array
+     * Loop through a set of API results that are available in pages, returning the full resultset as one array.
+     *
      * @param RequestInterface $request
-     * @param string $rootElement
-     * @param array $params
+     * @param string           $rootElement
+     * @param array            $params
+     *
      * @return array
      */
-    protected function processPaged(RequestInterface $request, $rootElement, array $params = array())
+    protected function processPaged(RequestInterface $request, $rootElement, array $params = [])
     {
         if (empty($params['page'])) {
             $params['page'] = 1;
@@ -133,13 +146,13 @@ abstract class AbstractEndpoint
             $params['limit'] = 250;
         }
 
-        $allResults = array();
+        $allResults = [];
 
         do {
             $requestUrl = $request->getUri();
             $paramDelim = strstr($requestUrl, '?') ? '&' : '?';
 
-            $pagedRequest = $request->withUri(new Uri($requestUrl . $paramDelim . http_build_query($params)));
+            $pagedRequest = $request->withUri(new Uri($requestUrl.$paramDelim.http_build_query($params)));
 
             $response = $this->process($pagedRequest);
 
@@ -149,7 +162,7 @@ abstract class AbstractEndpoint
                 $allResults = array_merge($allResults, $pageResults);
             }
 
-            $params['page']++;
+            ++$params['page'];
         } while ($pageResults);
 
         return $allResults;

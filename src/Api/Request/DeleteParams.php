@@ -1,4 +1,5 @@
 <?php
+
 namespace CodeCloud\Bundle\ShopifyBundle\Api\Request;
 
 use GuzzleHttp\Psr7\Request;
@@ -7,9 +8,9 @@ class DeleteParams extends Request
 {
     /**
      * @param string $url
-     * @param array $params
+     * @param array  $params
      */
-    public function __construct($url, array $params = array())
+    public function __construct($url, array $params = [])
     {
         if (!empty($params)) {
             $url .= '?'.http_build_query($params);

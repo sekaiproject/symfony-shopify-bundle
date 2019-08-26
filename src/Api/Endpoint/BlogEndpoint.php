@@ -1,4 +1,5 @@
 <?php
+
 namespace CodeCloud\Bundle\ShopifyBundle\Api\Endpoint;
 
 use CodeCloud\Bundle\ShopifyBundle\Api\Request\DeleteParams;
@@ -10,12 +11,14 @@ class BlogEndpoint extends AbstractEndpoint
 {
     /**
      * @param array $query
+     *
      * @return array|GenericResource[]
      */
-    public function findAll(array $query = array())
+    public function findAll(array $query = [])
     {
         $request = new GetJson('/admin/blogs.json', $query);
         $response = $this->send($request);
+
         return $this->createCollection($response->get('blogs'));
     }
 
@@ -26,42 +29,49 @@ class BlogEndpoint extends AbstractEndpoint
     {
         $request = new GetJson('/admin/blogs/count.json');
         $response = $this->send($request);
+
         return $response->get('count');
     }
 
     /**
-     * @param int $blogId
+     * @param int   $blogId
      * @param array $fields
+     *
      * @return GenericResource
      */
-    public function findOne($blogId, array $fields = array())
+    public function findOne($blogId, array $fields = [])
     {
-        $params = $fields ? array('fields' => $fields) : array();
-        $request = new GetJson('/admin/blogs/' . $blogId . '.json', $params);
+        $params = $fields ? ['fields' => $fields] : [];
+        $request = new GetJson('/admin/blogs/'.$blogId.'.json', $params);
         $response = $this->send($request);
+
         return $this->createEntity($response->get('blog'));
     }
 
     /**
      * @param GenericResource $blog
+     *
      * @return GenericResource
      */
     public function create(GenericResource $blog)
     {
-        $request = new PostJson('/admin/blogs.json', array('blog' => $blog->toArray()));
+        $request = new PostJson('/admin/blogs.json', ['blog' => $blog->toArray()]);
         $response = $this->send($request);
+
         return $this->createEntity($response->get('blog'));
     }
 
     /**
-     * @param int $blogId
+     * @param int             $blogId
      * @param GenericResource $blog
+     *
      * @return \CodeCloud\Bundle\ShopifyBundle\Api\GenericResource
      */
     public function update($blogId, GenericResource $blog)
     {
-        $request = new PostJson('/admin/blogs/' . $blogId . '.json', array('blog' => $blog->toArray()));
+        $request = new PostJson('/admin/blogs/'.$blogId.'.json', ['blog' => $blog->toArray()]);
         $response = $this->send($request);
+
         return $this->createEntity($response->get('blog'));
     }
 
@@ -70,7 +80,7 @@ class BlogEndpoint extends AbstractEndpoint
      */
     public function delete($blogId)
     {
-        $request = new DeleteParams('/admin/blogs/' . $blogId . '.json');
+        $request = new DeleteParams('/admin/blogs/'.$blogId.'.json');
         $this->send($request);
     }
 }

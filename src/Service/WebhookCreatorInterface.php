@@ -11,7 +11,7 @@ interface WebhookCreatorInterface
      * Creates webhooks in Shopify.
      *
      * @param string $storeName
-     * @param array $topics
+     * @param array  $topics
      */
     public function createWebhooks(string $storeName, array $topics);
 
@@ -19,6 +19,7 @@ interface WebhookCreatorInterface
      * Lists existing webhooks in Shopify.
      *
      * @param string $storeName
+     *
      * @return array
      */
     public function listWebhooks(string $storeName);

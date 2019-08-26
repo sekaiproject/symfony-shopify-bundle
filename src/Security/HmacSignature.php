@@ -1,4 +1,5 @@
 <?php
+
 namespace CodeCloud\Bundle\ShopifyBundle\Security;
 
 class HmacSignature
@@ -17,9 +18,11 @@ class HmacSignature
     }
 
     /**
-     * Check if the signature is correct
+     * Check if the signature is correct.
+     *
      * @param string $signature
-     * @param array $params
+     * @param array  $params
+     *
      * @return bool
      */
     public function isValid($signature, array $params)
@@ -28,38 +31,41 @@ class HmacSignature
     }
 
     /**
-     * Generate parameters to be used to authenticate subsequent requests
+     * Generate parameters to be used to authenticate subsequent requests.
+     *
      * @param string $storeName
+     *
      * @return array
      */
     public function generateParams($storeName)
     {
         $timestamp = time();
 
-        return array(
-            'shop'      => (string)$storeName,
+        return [
+            'shop' => (string) $storeName,
             'timestamp' => $timestamp,
-            'hmac' => $this->generateHmac(array(
-                'shop'      => (string)$storeName,
-                'timestamp' => $timestamp
-            ))
-        );
+            'hmac' => $this->generateHmac([
+                'shop' => (string) $storeName,
+                'timestamp' => $timestamp,
+            ]),
+        ];
     }
 
     /**
      * @param array $params
+     *
      * @return string
      */
     private function generateHmac($params)
     {
-        $signatureParts = array();
+        $signatureParts = [];
 
         foreach ($params as $key => $value) {
-            if (in_array($key, array('signature', 'hmac'))) {
+            if (in_array($key, ['signature', 'hmac'])) {
                 continue;
             }
 
-            $signatureParts[] = $key . '=' . $value;
+            $signatureParts[] = $key.'='.$value;
         }
 
         natsort($signatureParts);

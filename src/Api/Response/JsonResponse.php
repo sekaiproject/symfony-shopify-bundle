@@ -1,4 +1,5 @@
 <?php
+
 namespace CodeCloud\Bundle\ShopifyBundle\Api\Response;
 
 use Psr\Http\Message\ResponseInterface as PsrResponse;
@@ -32,9 +33,11 @@ class JsonResponse implements ResponseInterface
     }
 
     /**
-     * Access elements of the JSON response using dot notation
+     * Access elements of the JSON response using dot notation.
+     *
      * @param null $item
      * @param null $default
+     *
      * @return mixed
      */
     public function get($item = null, $default = null)
@@ -50,7 +53,7 @@ class JsonResponse implements ResponseInterface
         }
 
         foreach (explode('.', $item) as $segment) {
-            if (! is_array($decoded) || ! array_key_exists($segment, $decoded)) {
+            if (!is_array($decoded) || !array_key_exists($segment, $decoded)) {
                 return $default;
             }
 
@@ -83,7 +86,7 @@ class JsonResponse implements ResponseInterface
                 true
             );
         } catch (\InvalidArgumentException $e) {
-            return $this->decoded = array();
+            return $this->decoded = [];
         }
     }
 }

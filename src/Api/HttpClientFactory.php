@@ -19,10 +19,9 @@ class HttpClientFactory implements HttpClientFactoryInterface
         $handlers = HandlerStack::create();
         $handlers->push(Middleware::retry(
             function ($retries, RequestInterface $request, ResponseInterface $response = null, \Exception $error = null) {
-
                 // todo rate limit by this
                 //$response->getHeaderLine('X-Shopify-Shop-Api-Call-Limit');
-                if ($response && $response->getStatusCode() == Response::HTTP_TOO_MANY_REQUESTS) {
+                if ($response && Response::HTTP_TOO_MANY_REQUESTS == $response->getStatusCode()) {
                     return true;
                 }
 
@@ -41,7 +40,7 @@ class HttpClientFactory implements HttpClientFactoryInterface
         ));
 
         $options = [
-            'base_uri' => 'https://' . $storeName,
+            'base_uri' => 'https://'.$storeName,
             //'handler' => $handlers,
         ];
 

@@ -1,13 +1,13 @@
 <?php
+
 namespace CodeCloud\Bundle\ShopifyBundle\Api;
 
 class GenericResource implements \ArrayAccess
 {
-
     /**
      * @var array
      */
-    private $data = array();
+    private $data = [];
 
     /**
      * @param array $data
@@ -19,7 +19,7 @@ class GenericResource implements \ArrayAccess
 
     /**
      * @param string $offset
-     * @param mixed $value
+     * @param mixed  $value
      */
     public function offsetSet($offset, $value)
     {
@@ -28,6 +28,7 @@ class GenericResource implements \ArrayAccess
 
     /**
      * @param string $offset
+     *
      * @return mixed
      */
     public function offsetGet($offset)
@@ -37,6 +38,7 @@ class GenericResource implements \ArrayAccess
 
     /**
      * @param string $offset
+     *
      * @return bool
      */
     public function offsetExists($offset)
@@ -64,7 +66,8 @@ class GenericResource implements \ArrayAccess
 
     /**
      * @param string $param
-     * @param mixed $default
+     * @param mixed  $default
+     *
      * @return mixed
      */
     public function get($param, $default = null)
@@ -74,12 +77,14 @@ class GenericResource implements \ArrayAccess
 
     /**
      * @param array $data
+     *
      * @return GenericResource
      */
-    public static function create(array $data = array())
+    public static function create(array $data = [])
     {
         $entity = new static();
         $entity->hydrate($data);
+
         return $entity;
     }
 }

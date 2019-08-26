@@ -26,7 +26,7 @@ class WebhookEvent extends Event
     /**
      * @param string $topic
      * @param string $store
-     * @param array $resource
+     * @param array  $resource
      */
     public function __construct(string $topic, string $store, array $resource)
     {

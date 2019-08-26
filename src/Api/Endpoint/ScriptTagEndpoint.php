@@ -1,4 +1,5 @@
 <?php
+
 namespace CodeCloud\Bundle\ShopifyBundle\Api\Endpoint;
 
 use CodeCloud\Bundle\ShopifyBundle\Api\Request\DeleteParams;
@@ -11,11 +12,12 @@ class ScriptTagEndpoint extends AbstractEndpoint
 {
     /**
      * @param array $fields
+     *
      * @return array|GenericResource[]
      */
-    public function findAll(array $fields = array())
+    public function findAll(array $fields = [])
     {
-        $params = $fields ? array('fields' => implode(',', $fields)) : array();
+        $params = $fields ? ['fields' => implode(',', $fields)] : [];
         $request = new GetJson('/admin/script_tags.json', $params);
         $response = $this->send($request);
 
@@ -24,11 +26,12 @@ class ScriptTagEndpoint extends AbstractEndpoint
 
     /**
      * @param int $id
+     *
      * @return GenericResource
      */
     public function findOne($id)
     {
-        $request = new GetJson('/admin/script_tags/' . $id . '.json');
+        $request = new GetJson('/admin/script_tags/'.$id.'.json');
         $response = $this->send($request);
 
         return $this->createEntity($response->get('script_tag'));
@@ -36,24 +39,26 @@ class ScriptTagEndpoint extends AbstractEndpoint
 
     /**
      * @param GenericResource $resource
+     *
      * @return \CodeCloud\Bundle\ShopifyBundle\Api\GenericResource
      */
     public function create(GenericResource $resource)
     {
-        $request = new PostJson('/admin/script_tags.json', array('script_tag' => $resource->toArray()));
+        $request = new PostJson('/admin/script_tags.json', ['script_tag' => $resource->toArray()]);
         $response = $this->send($request);
 
         return $this->createEntity($response->get('script_tag'));
     }
 
     /**
-     * @param int $id
+     * @param int             $id
      * @param GenericResource $resource
+     *
      * @return GenericResource
      */
     public function update($id, $resource)
     {
-        $request = new PutJson('/admin/script_tags/' . $id . '.json', array('script_tag' => $resource->toArray()));
+        $request = new PutJson('/admin/script_tags/'.$id.'.json', ['script_tag' => $resource->toArray()]);
         $response = $this->send($request);
 
         return $this->createEntity($response->get('script_tag'));
@@ -64,7 +69,7 @@ class ScriptTagEndpoint extends AbstractEndpoint
      */
     public function delete($id)
     {
-        $request = new DeleteParams('/admin/script_tags/' . $id . '.json');
+        $request = new DeleteParams('/admin/script_tags/'.$id.'.json');
         $this->send($request);
     }
 }
