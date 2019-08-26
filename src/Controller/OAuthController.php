@@ -163,15 +163,27 @@ class OAuthController
             throw new InsufficientScopeException($this->config['scope'], $responseJson['scope']);
         }
 
+        // check if there is existing store token for redirecting purposes
+        $existingAccessToken = $this->stores->getAccessToken($storeName);
+
         $accessToken = $responseJson['access_token'];
         $this->stores->authenticateStore($storeName, $accessToken, $nonce);
 
-        if ($response = $this->dispatcher->dispatch(
-            PostAuthEvent::NAME,
-            new PostAuthEvent($storeName, $accessToken)
-        )->getResponse()
-        ) {
-            return $response;
+        $this->dispatcher->dispatch(PostAuthEvent::NAME, new PostAuthEvent($storeName, $accessToken));
+
+        // check if this is first installation then redirect to apps section
+        if (0 == mb_strlen($existingAccessToken)) {
+            $redirectUrl = sprintf('https://%s/admin/apps', $storeName);
+
+            return new RedirectResponse($redirectUrl);
+        }
+
+        // check for session redirect target
+        $session = $request->getSession();
+        if ($session) {
+            $targetPath = $session->get('_security.shopify_admin.target_path');
+
+            return new RedirectResponse($targetPath);
         }
 
         return new RedirectResponse(
